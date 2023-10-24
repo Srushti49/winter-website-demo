@@ -6,7 +6,7 @@ This Terraform code is used to configure Static Website using Terrraform
 
 Before applying this configuration, make sure you have:
 
-1. AWS CLI installed and configured with appropriate credentials.
+1. AWS CLI installed and configured with appropriate credentials
 
 ## Configuration
 
