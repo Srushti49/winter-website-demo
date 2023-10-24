@@ -25,3 +25,4 @@ jobs:
         run: |
           # Your AWS CLI command here
           aws s3 ls
+          aws s3 cp temp s3://ctl-static-website-devops --recursive
