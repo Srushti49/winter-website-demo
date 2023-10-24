@@ -95,14 +95,74 @@ To destroy the resources created by this configuration, you can run:
 terraform destroy
 ```
 
-## Author
 
-[Your Name]
+**Problem Statement:**
 
-## License
+Our organization is looking to streamline the deployment process for our static website hosted in an AWS S3 bucket. Currently, the deployment process is manual and error-prone, leading to inconsistencies in the production environment. To address this issue, we need to implement a Continuous Integration and Continuous Deployment (CI/CD) pipeline that automates the building and deployment of our static website.
 
-This project is licensed under the [License Name] - see the [LICENSE.md](LICENSE.md) file for details.
+**Project Description:**
 
+The goal of this project is to create a CI/CD pipeline that automatically builds and deploys our static website hosted in an AWS S3 bucket whenever changes are pushed to the GitHub repository. To achieve this, we will use GitHub Actions as our CI/CD platform.
+
+**Key Objectives:**
+
+1. Automate the build process: Whenever changes are pushed to the GitHub repository, the CI/CD pipeline should automatically build the static website from source code.
+
+2. Automate deployment: After a successful build, the pipeline should deploy the website to an AWS S3 bucket, making it instantly accessible to users.
+
+3. Ensure that the pipeline runs only when changes are pushed to the `main` branch to avoid unnecessary deployments for feature branches.
+
+4. Implement proper error handling and notifications in case of build or deployment failures.
+
+**CI/CD Pipeline Steps:**
+
+1. **Linting and Testing**: Ensure the code passes linting and testing checks to maintain code quality.
+
+2. **Build**: Generate the production-ready static website from source code.
+
+3. **Deployment**: Deploy the website to an AWS S3 bucket.
+
+4. **Notification**: Send a notification on successful deployment or in case of any failures.
+
+**GitHub Action Workflow:**
+
+Create a GitHub Actions workflow file (e.g., `.github/workflows/ci-cd.yml`) with the following code to set up the CI/CD pipeline. This example assumes you have already configured AWS credentials in your GitHub repository secrets.
+
+```yaml
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Deploy to S3
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_DEFAULT_REGION: us-east-1  # Replace with your desired region
+        run: |
+          aws s3 sync build/ s3://your-s3-bucket-name
+
+      - name: Notify on success
+        if: success()
+        run: echo "Deployment successful!"
+
+      - name: Notify on failure
+        if: failure()
+        run: echo "Deployment failed!"
 ```
 
-Please replace `[Your Name]` and `[License Name]` with your name and the appropriate license for your code if needed. You can also provide additional details or documentation specific to your use case.
+Replace the placeholders (`your-s3-bucket-name`, `AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY`) with your specific S3 bucket name and AWS credentials. This workflow will be triggered when changes are pushed to the `main` branch, and it will perform linting, building, and deployment as specified in the steps.
+
+Ensure that you've installed the AWS CLI in your GitHub Actions runner environment and configured it with the necessary AWS credentials. Also, adapt the build and deployment steps to match your project's build and deployment process.
+
+This setup will help you create an automated CI/CD pipeline for your static website hosted in AWS S3 using GitHub Actions.
