@@ -87,16 +87,7 @@ Edit the `backend.tf` file to match your specific settings. Here's what each par
 
 State locking is a crucial feature to prevent conflicts when multiple users or processes are managing infrastructure. If you have specified a DynamoDB table, Terraform will use it for state locking. Ensure the table exists and has the necessary permissions.
 
-## Cleanup
-
-To destroy the resources created by this configuration, you can run:
-
-```shell
-terraform destroy
-```
-
-
-**Problem Statement:**
+**Problem Statement: Setup CI/CD Pipeline for Static Website **
 
 Our organization is looking to streamline the deployment process for our static website hosted in an AWS S3 bucket. Currently, the deployment process is manual and error-prone, leading to inconsistencies in the production environment. To address this issue, we need to implement a Continuous Integration and Continuous Deployment (CI/CD) pipeline that automates the building and deployment of our static website.
 
@@ -166,3 +157,13 @@ Replace the placeholders (`your-s3-bucket-name`, `AWS_ACCESS_KEY_ID`, `AWS_SECRE
 Ensure that you've installed the AWS CLI in your GitHub Actions runner environment and configured it with the necessary AWS credentials. Also, adapt the build and deployment steps to match your project's build and deployment process.
 
 This setup will help you create an automated CI/CD pipeline for your static website hosted in AWS S3 using GitHub Actions.
+
+
+## Cleanup
+
+To destroy the resources created by this configuration, you can run:
+
+```shell
+terraform destroy
+```
+
