@@ -26,3 +26,11 @@ jobs:
           # Your AWS CLI command here
           aws s3 ls
           aws s3 cp temp s3://ctl-static-website-devops --recursive
+
+      - name: Notify on success
+        if: success()
+        run: echo "Deployment successful!"
+
+      - name: Notify on failure
+        if: failure()
+        run: echo "Deployment failed!"
