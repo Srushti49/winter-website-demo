@@ -27,6 +27,11 @@ jobs:
           aws s3 ls
           aws s3 cp temp s3://ctl-static-website-devops --recursive
 
+      - name: Run Linux Commands 
+        run: |
+          pwd
+          ls
+          
       - name: Notify on success
         if: success()
         run: echo "Deployment successful!"
